@@ -1,0 +1,47 @@
+<section class="container">
+    <!-- Imagem do projeto -->
+    <figure>
+        <img src="assets/img/task-list-null.png" alt="ilustrative image,your list are empty "
+        loading="lazy"
+        >
+    </figure>
+
+    @if (addItem()) {
+        <button
+        class="btn 
+               btn-primary 
+               text-stone-900 
+               bg-red-200
+               hover:bg-red-300
+               hover:text-white"
+    
+        (click)="addItem.set(false)"
+        > Create A task List</button>
+    }    
+    @else {
+        <div>
+            <label 
+            class="input-label-text
+                    bg-rose-100" 
+            for="inputValue">
+            
+            
+                <input
+                type="text"
+                placeholder="Add a new task"
+                id="inputValue"
+                autofocus>
+
+                <button 
+                class="btn
+                    btn-primary-circle  
+                    text-stone-900 
+                    bg-red-200
+                    hover:bg-red-300
+                    hover:text-white"
+                title="Add a new Item">
+                </button>
+            </label>
+        </div>
+    }
+</section>
