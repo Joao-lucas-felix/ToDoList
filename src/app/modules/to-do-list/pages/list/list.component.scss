@@ -6,15 +6,35 @@
     align-items: center;
     flex-direction: column;
 
-    section.container{
+    .container{
+        max-width: 750px;
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
+    }
+    
+    section.container{
+
         .btn-primary,
         div{
             margin-top: 30px;
             width: 100%;
         }
+    }
+    main.container{
+        height: calc(100vh - 130px - 90px);
+        height: calc(100dvh - 130px - 90px);
+        overflow-y: auto;
+
+    }
+    footer{
+        height: 90px;
+        width: 100%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
     }
 }

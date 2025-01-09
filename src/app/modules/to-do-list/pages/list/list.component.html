@@ -1,47 +1,67 @@
-<section class="container">
-    <!-- Imagem do projeto -->
-    <figure>
-        <img src="assets/img/task-list-null.png" alt="ilustrative image,your list are empty "
-        loading="lazy"
-        >
-    </figure>
 
-    @if (addItem()) {
-        <button
-        class="btn 
-               btn-primary 
-               text-stone-900 
-               bg-red-200
-               hover:bg-red-300
-               hover:text-white"
-    
-        (click)="addItem.set(false)"
-        > Create A task List</button>
-    }    
-    @else {
-        <div>
-            <label 
-            class="input-label-text
-                    bg-rose-100" 
-            for="inputValue">
-            
-            
-                <input
-                type="text"
-                placeholder="Add a new task"
-                id="inputValue"
-                autofocus>
 
-                <button 
-                class="btn
-                    btn-primary-circle  
-                    text-stone-900 
-                    bg-red-200
-                    hover:bg-red-300
-                    hover:text-white"
-                title="Add a new Item">
-                </button>
-            </label>
-        </div>
-    }
-</section>
+@if(!getListItens().length){
+    <section class="container">
+        <!-- Imagem do projeto -->
+        <figure>
+            <img src="assets/img/task-list-null.png" alt="ilustrative image,your list are empty "
+            loading="lazy"
+            >
+        </figure>
+
+        @if (addItem()) {
+            <button
+            class="btn 
+                btn-primary 
+                text-white
+                bg-sky-500
+                hover:bg-sky-700
+                hover:text-stone-900"
+        
+            (click)="addItem.set(false)"
+            > Create A task List</button>
+        }    
+        @else {
+            <app-input-add-item 
+            (outputListItems)="getInputAndAddItem($event)"
+            [inputListItens]="getListItens()"   
+            />
+        }
+    </section>
+}
+@else {
+    <section class="container mt-4">
+        <app-input-add-item 
+        (outputListItems)="getInputAndAddItem($event)"
+        [inputListItens]="getListItens()"   
+        />
+    </section>
+
+    <main class="container">
+        @if (listItensStage('pending').length) {
+            <h2 class="text-stone-100">Pending</h2>
+            <app-input-list-item 
+                [inputListItens]="listItensStage('pending')"
+                (outPutUpdateItemCheckbox)="upadteItemCheckBox($event)"
+                (outPutUpdateItemText)="upadteItemText($event)"
+                (outputDeleteItem)="deleteItem($event)"
+            />
+        }
+        @if (listItensStage('completed').length) {
+            <h2 class="text-stone-100">Completed</h2>
+            <app-input-list-item 
+                [inputListItens]="listItensStage('completed')" 
+                (outPutUpdateItemCheckbox)="upadteItemCheckBox($event)"
+                (outPutUpdateItemText)="upadteItemText($event)"
+                (outputDeleteItem)="deleteItem($event)"
+            />
+        }
+
+    </main>
+    <footer >
+        <button class="btn btn-danger bg-red-500 text-stone-100 hover:bg-red-700 hover:text-stone-900" (click)="deleteAllItens()">
+            Delete all 
+        </button>
+    </footer>
+}
+
