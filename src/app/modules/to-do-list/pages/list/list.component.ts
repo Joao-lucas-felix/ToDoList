@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
   styleUrl: './list.component.scss'
 })
 export class ListComponent {
+  #listLen = 0 
 
   public addItem = signal(true)
   
@@ -19,13 +20,14 @@ export class ListComponent {
   public getListItens = this.#setListItens.asReadonly()
 
   #parseItens() {
-      return JSON.parse(localStorage.getItem('@my-list') || "[]")
-
+    if (this.#listLen > 0){return JSON.parse(localStorage.getItem('@my-list') || "[]") }
+    return []
   }
   public getInputAndAddItem(value: IListItem){
     localStorage.setItem('@my-list',
       JSON.stringify([...this.#setListItens(), value])
     )
+    this.#listLen += 1
     return this.#setListItens.set(this.#parseItens())
   }
 
@@ -39,6 +41,7 @@ export class ListComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         localStorage.removeItem('@my-list')
+        this.#listLen = 0
         return this.#setListItens.set(this.#parseItens())
       }
     });
@@ -99,6 +102,7 @@ export class ListComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         this.#setListItens.update((old: IListItem[]) => old.filter(r => r.id !== id))
+        this.#listLen -= 1
         return this.#updateLocal()
       }
     });
