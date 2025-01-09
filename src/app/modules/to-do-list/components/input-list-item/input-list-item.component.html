@@ -1,0 +1,22 @@
+@for (item of inputListItens; track $index) {
+    <label class="input-label-text  bg-sky-400
+    mt-8" [for]=" item.id" >
+        <input type="checkbox" #inputCheckBox [checked]="item.checked" 
+        class="bg-white checked:bg-green-400 p-3 m-3"
+        (input)="updateItemCheckbox(item.id, inputCheckBox.checked)">
+        
+        <input type="text"  #inputValue [id]="item.id" [value]="item.value"
+        placeholder="Add a value"
+        autofocus    
+        class="text-stone-100"
+        (input)="updateItemText(item.id,inputValue.value)"
+        >
+        <button 
+            class="btn btn-danger-circle  bg-red-600 hover:bg-red-400 p-2  m-2" 
+            title="Delete this item"
+            (click)="deleteItem(item.id)"
+        >
+
+        </button>
+    </label>
+}
